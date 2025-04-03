@@ -1,5 +1,5 @@
 module ScienceBase
 
-# Write your package code here.
+include("constants.jl")
 
 end
