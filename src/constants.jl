@@ -25,3 +25,6 @@ const NMIC_item_ID = "5c8c03e4e4b0938824529f7d"
 
 "Item ID for Mineral Commodity Summaries 2025 Data Release"
 const MSC_2025_item_ID = "677eaf95d34e760b392c4970"
+
+"Mineral Commodity Summaries 2025 - World Production, Capacity, and Reserves Commodity Data Release"
+const MSC_2025_World_Data_item_ID = "6798fd34d34ea8c18376e8ee"
