@@ -28,3 +28,15 @@ const MSC_2025_item_ID = "677eaf95d34e760b392c4970"
 
 "Mineral Commodity Summaries 2025 - World Production, Capacity, and Reserves Commodity Data Release"
 const MSC_2025_World_Data_item_ID = "6798fd34d34ea8c18376e8ee"
+
+"USGS Publications Warehouse domain"
+const pubs_domain = "pubs.usgs.gov"
+
+"Mineral Commodity Summaries 2025 publication"
+const MSC_2025_pub_pdf = joinpath(pubs_domain, "periodicals/mcs2025/mcs2025.pdf")
+
+"Mineral Commodity Summaries 2024 publication"
+const MSC_2024_pub_pdf = joinpath(pubs_domain, "periodicals/mcs2024/mcs2024.pdf")
+
+"Mineral Commodity Summaries 2024 publication"
+const MSC_2023_pub_pdf = joinpath(pubs_domain, "periodicals/mcs2023/mcs2023.pdf")

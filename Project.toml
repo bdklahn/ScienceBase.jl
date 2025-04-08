@@ -6,15 +6,19 @@ version = "1.0.0-DEV"
 [deps]
 Arrow = "69666777-d1a9-59fb-9406-91d4454c9d45"
 CSV = "336ed68f-0bac-5ca0-87d4-7b16caf5d00b"
+Dates = "ade2ca70-3891-5945-98fb-dc099432e06a"
 HTTP = "cd3eb016-35fb-5094-929b-558a96fad6f3"
 JSON3 = "0f8b85d8-7281-11e9-16c2-39a750bddbf1"
+PDFIO = "4d0d745f-9d9a-592e-8d18-1ad8a0f42b92"
 URIs = "5c2747f8-b7ea-4ff2-ba2e-563bfd36b1d4"
 
 [compat]
 Arrow = "2.8.0"
 CSV = "0.10.15"
+Dates = "1.11.0"
 HTTP = "1.10.15"
 JSON3 = "1.14.2"
+PDFIO = "0.1.15"
 URIs = "1.5.2"
 julia = "1.11"
 
