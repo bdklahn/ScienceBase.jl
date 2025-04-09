@@ -57,28 +57,38 @@ function get_data(uri::URI=make_uri(), outdir::AbstractString="data/USGS";
     end
     if cacheintermediates
         close(tmpfilehandle)
-        dir, filename = splitdir(uri.path)
-        dir = joinpath(outdir, strip(dir, '/'))
-        mkpath(dir)
-        outpath = joinpath(dir, filename)
-        if !isfile(outpath) || overwriteexisting
-            mv(tmpfilepath, outpath; force=true)
-        else
-            @warn "skipping: $outpath"
+        _, filename = splitdir(uri.path)
+        mkpath(outdir)
+        outpath = joinpath(outdir, filename)
+        if isfile(outpath) @warn "already exists: $outpath" end
+        try
+            @info "trying (if allowed) to write: $outpath"
+            mv(tmpfilepath, outpath; force=overwriteexisting)
+        catch e
+            @warn e
         end
     end
     data
 end
 
-function pull_MCS_PDFs(fromdate::Int=1996, todate::Int=year(today()))
-    for y in fromdate:todate
+
+"""
+Pull the [Mineral Commodity Summaries](https://www.usgs.gov/centers/national-minerals-information-center/mineral-commodity-summaries)
+PDF files, from between the given years.
+"""
+function pull_MCS_PDFs(;
+    fromyear::Int=1996,
+    toyear::Int=year(today()),
+    outdir::AbstractString="data/USGS/literature/Mineral_Commodity_Summaries",
+)
+    for y in fromyear:toyear
         uri =
             1996 <= y <= 2012 ? URI("https://d9-wret.s3.us-west-2.amazonaws.com/assets/palladium/production/atoms/files/mcs-$(y)ocr.pdf") :
             2013 <= y <= 2019 ? URI("https://apps.usgs.gov/minerals-information-archives/mcs/mcs$(y).pdf") :
                                 URI("https://"*joinpath(pubs_domain, "periodicals/mcs$y/mcs$y.pdf"))
         @info "" uri
         try
-            get_data(uri; cacheintermediates=true)
+            get_data(uri, outdir; cacheintermediates=true)
         catch e
             @warn e
         end
