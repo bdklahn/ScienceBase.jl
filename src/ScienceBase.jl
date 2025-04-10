@@ -93,12 +93,18 @@ function pull_MCS_PDFs(;
     toyear::Int=year(today()),
     outdir::AbstractString="data/USGS/literature/Mineral_Commodity_Summaries",
 )
+    @assert fromyear <= toyear "toyear must be greater or equal to fromyear"
+    firstyear = 1996
+    thisyear = year(today())
+    fromyear = clamp(fromyear, firstyear, thisyear)
+    toyear =   clamp(toyear,   firstyear, thisyear)
+
     for y in fromyear:toyear
         uri =
-            1996 <= y <= 1999 ? URI("https://d9-wret.s3.us-west-2.amazonaws.com/assets/palladium/production/atoms/files/mcs-$(y)ocr.pdf") :
-            2000 <= y <= 2012 ? URI("https://d9-wret.s3.us-west-2.amazonaws.com/assets/palladium/production/mineral-pubs/mcs/mcs$y.pdf") :
-            2013 <= y <= 2019 ? URI("https://apps.usgs.gov/minerals-information-archives/mcs/mcs$(y).pdf") :
-                                URI("https://"*joinpath(pubs_domain, "periodicals/mcs$y/mcs$y.pdf"))
+            firstyear <= y <= 1999 ? URI("https://d9-wret.s3.us-west-2.amazonaws.com/assets/palladium/production/atoms/files/mcs-$(y)ocr.pdf") :
+            2000 <= y <= 2012 ?      URI("https://d9-wret.s3.us-west-2.amazonaws.com/assets/palladium/production/mineral-pubs/mcs/mcs$y.pdf") :
+            2013 <= y <= 2019 ?      URI("https://apps.usgs.gov/minerals-information-archives/mcs/mcs$(y).pdf") :
+                                     URI("https://"*joinpath(pubs_domain, "periodicals/mcs$y/mcs$y.pdf"))
         @info "" uri
         try
             get_data(uri, outdir; cacheintermediates=true)
