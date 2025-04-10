@@ -46,14 +46,26 @@ function get_data(uri::URI=make_uri(), outdir::AbstractString="data/USGS";
     seek(tmpfilehandle, 0)
     content_type = get(Dict(resp.headers), "Content-Type", nothing)
     @info "content_type: " content_type
+    data = nothing
     if occursin("application/json", content_type)
         # JSON response
-        data = JSON3.read(tmpfilehandle)
+        try
+            data = JSON3.read(tmpfilehandle)
+        catch e
+            @warn e
+        end
     elseif occursin("text/csv", content_type)
-        data = CSV.File(tmpfilehandle)
+        try
+            data = CSV.File(tmpfilehandle)
+        catch e
+            @warn e
+        end
     elseif occursin("application/pdf", content_type)
-        # close(tmpfilehandle)
-        data = pdDocGetInfo(pdDocOpen(tmpfilepath))
+        try
+            data = pdDocGetInfo(pdDocOpen(tmpfilepath))
+        catch e
+            @warn e
+        end
     end
     if cacheintermediates
         close(tmpfilehandle)
