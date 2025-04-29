@@ -34,7 +34,7 @@ end
 
 function get_data(uri::URI=make_uri(), outdir::AbstractString="data/USGS";
     cacheintermediates::Bool=true,
-    overwriteexisting=false,
+    overwriteexisting::Bool=false,
 )
     tmpfilepath, tmpfilehandle = mktemp()
     @info "tmpfilepath: " tmpfilepath
